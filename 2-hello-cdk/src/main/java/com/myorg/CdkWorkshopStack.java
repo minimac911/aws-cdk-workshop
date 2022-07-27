@@ -1,5 +1,6 @@
 package com.myorg;
 
+import software.amazon.awscdk.services.apigateway.LambdaRestApi;
 import software.amazon.awscdk.services.lambda.Code;
 import software.amazon.awscdk.services.lambda.Function;
 import software.amazon.awscdk.services.lambda.Runtime;
@@ -19,6 +20,10 @@ public class CdkWorkshopStack extends Stack {
                 .runtime(Runtime.NODEJS_14_X)
                 .code(Code.fromAsset("lambda"))
                 .handler("hello.handler")
+                .build();
+
+        LambdaRestApi.Builder.create(this, "Endpoint")
+                .handler(helloLambda)
                 .build();
     }
 }
