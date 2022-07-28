@@ -1,5 +1,6 @@
 package com.myorg;
 
+import io.github.cdklabs.dynamotableviewer.TableViewer;
 import software.amazon.awscdk.services.apigateway.LambdaRestApi;
 import software.amazon.awscdk.services.lambda.Code;
 import software.amazon.awscdk.services.lambda.Function;
@@ -29,6 +30,11 @@ public class CdkWorkshopStack extends Stack {
 
         LambdaRestApi.Builder.create(this, "Endpoint")
                 .handler(hitCounter.getHandler())
+                .build();
+
+        TableViewer.Builder.create(this, "ViewerHitCount")
+                .title("Hello Hits")
+                .table(hitCounter.getTable())
                 .build();
     }
 }
