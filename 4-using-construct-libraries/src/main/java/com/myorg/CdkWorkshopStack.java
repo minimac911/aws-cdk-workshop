@@ -35,6 +35,7 @@ public class CdkWorkshopStack extends Stack {
         TableViewer.Builder.create(this, "ViewerHitCount")
                 .title("Hello Hits")
                 .table(hitCounter.getTable())
+                .sortBy("-hits")
                 .build();
     }
 }
