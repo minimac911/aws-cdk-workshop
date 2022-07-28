@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Getter
-public class HitCounter extends Construct {
+    public class HitCounter extends Construct {
     private final Function handler;
     private final Table table;
     public HitCounter(final Construct scope, final String id, final HitCounterProps props){
@@ -36,5 +36,9 @@ public class HitCounter extends Construct {
                 .handler("hitcounter.handler")
                 .environment(environment)
                 .build();
+
+        this.table.grantReadWriteData(this.handler);
+
+        props.getDownstream().grantInvoke(this.handler);
     }
 }
