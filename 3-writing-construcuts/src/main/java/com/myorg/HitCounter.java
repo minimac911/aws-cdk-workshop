@@ -1,5 +1,6 @@
 package com.myorg;
 
+import lombok.Getter;
 import software.amazon.awscdk.services.dynamodb.Attribute;
 import software.amazon.awscdk.services.dynamodb.AttributeType;
 import software.amazon.awscdk.services.dynamodb.Table;
@@ -11,6 +12,7 @@ import software.constructs.Construct;
 import java.util.HashMap;
 import java.util.Map;
 
+@Getter
 public class HitCounter extends Construct {
     private final Function handler;
     private final Table table;
@@ -34,13 +36,5 @@ public class HitCounter extends Construct {
                 .handler("hitcounter.handler")
                 .environment(environment)
                 .build();
-    }
-
-    public Function getHandler() {
-        return this.handler;
-    }
-
-    public Table getTable(){
-        return this.table;  
     }
 }
