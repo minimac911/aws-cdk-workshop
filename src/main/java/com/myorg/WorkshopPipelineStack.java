@@ -36,6 +36,9 @@ public class WorkshopPipelineStack extends Stack {
                                 "npx cdk synth" // need to test if npx is actually needed
                         )).build())
                 .build();
+
+        final WorkshopPipelineStage stage = new WorkshopPipelineStage(this, "Deploy");
+        pipeline.addStage(stage);
     }
 
 
