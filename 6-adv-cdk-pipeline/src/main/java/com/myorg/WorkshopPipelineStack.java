@@ -1,7 +1,6 @@
 package com.myorg;
 
-import com.sun.tools.javac.util.List;
-import org.jetbrains.annotations.NotNull;
+import java.util.List;
 import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.StackProps;
 import software.amazon.awscdk.pipelines.CodeBuildStep;
@@ -12,7 +11,7 @@ import software.constructs.Construct;
 
 public class WorkshopPipelineStack extends Stack {
     public WorkshopPipelineStack(Construct scope, String id) {
-        super(scope, id);
+        this(scope, id, null);
     }
 
     public WorkshopPipelineStack(Construct scope, String id, StackProps props) {
@@ -20,7 +19,7 @@ public class WorkshopPipelineStack extends Stack {
 
         final CodePipelineSource githubCodeSource = CodePipelineSource.connection("minimac911/aws-cdk-workshop", "main", new ConnectionSourceOptions() {
             @Override
-            public @NotNull String getConnectionArn() {
+            public String getConnectionArn() {
                 return "arn:aws:codestar-connections:us-east-1:714185102750:connection/84ca8d3b-cc50-44ef-b691-98ebe151e809";
             }
         });
