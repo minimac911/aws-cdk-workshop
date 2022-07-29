@@ -7,6 +7,7 @@ import software.amazon.awscdk.StackProps;
 import software.amazon.awscdk.pipelines.CodeBuildStep;
 import software.amazon.awscdk.pipelines.CodePipeline;
 import software.amazon.awscdk.pipelines.CodePipelineSource;
+import software.amazon.awscdk.pipelines.ConnectionSourceOptions;
 import software.constructs.Construct;
 
 public class WorkshopPipelineStack extends Stack {
@@ -17,8 +18,11 @@ public class WorkshopPipelineStack extends Stack {
     public WorkshopPipelineStack(Construct scope, String id, StackProps props) {
         super(scope, id, props);
 
-        final CodePipelineSource githubCodeSource = CodePipelineSource.connection("minimac911/aws-cdk-workshop", "main", () -> {
-            return "arn:aws:codestar-connections:us-east-1:714185102750:connection/84ca8d3b-cc50-44ef-b691-98ebe151e809";
+        final CodePipelineSource githubCodeSource = CodePipelineSource.connection("minimac911/aws-cdk-workshop", "main", new ConnectionSourceOptions() {
+            @Override
+            public @NotNull String getConnectionArn() {
+                return "arn:aws:codestar-connections:us-east-1:714185102750:connection/84ca8d3b-cc50-44ef-b691-98ebe151e809";
+            }
         });
 
         final CodePipeline pipeline = CodePipeline.Builder.create(this, "Pipeline")
