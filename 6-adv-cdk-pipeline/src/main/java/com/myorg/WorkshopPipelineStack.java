@@ -17,7 +17,7 @@ public class WorkshopPipelineStack extends Stack {
     public WorkshopPipelineStack(Construct scope, String id, StackProps props) {
         super(scope, id, props);
 
-        final CodePipelineSource githubCodeSource = CodePipelineSource.connection("minimac911/aws-cdk-workshop", "main", new ConnectionSourceOptions() {
+        final CodePipelineSource githubCodeSource = CodePipelineSource.connection("minimac911/aws-cdk-workshop", "feature/cdk-pipelines", new ConnectionSourceOptions() {
             @Override
             public String getConnectionArn() {
                 return "arn:aws:codestar-connections:us-east-1:714185102750:connection/84ca8d3b-cc50-44ef-b691-98ebe151e809";
