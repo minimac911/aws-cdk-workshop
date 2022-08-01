@@ -1,6 +1,7 @@
 package com.myorg;
 
 import io.github.cdklabs.dynamotableviewer.TableViewer;
+import software.amazon.awscdk.CfnOutput;
 import software.amazon.awscdk.services.apigateway.LambdaRestApi;
 import software.amazon.awscdk.services.lambda.Code;
 import software.amazon.awscdk.services.lambda.Function;
@@ -10,6 +11,8 @@ import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.StackProps;
 
 public class CdkWorkshopStack extends Stack {
+    public final CfnOutput outputViewerUrl;
+    public final CfnOutput outputEndpoint;
     public CdkWorkshopStack(final Construct parent, final String id) {
         this(parent, id, null);
     }
@@ -28,14 +31,22 @@ public class CdkWorkshopStack extends Stack {
                 .build();
         final HitCounter hitCounter = new HitCounter(this, "HelloHitCounter", hitCounterProps);
 
-        LambdaRestApi.Builder.create(this, "Endpoint")
+        final LambdaRestApi gateway = LambdaRestApi.Builder.create(this, "Endpoint")
                 .handler(hitCounter.getHandler())
                 .build();
 
-        TableViewer.Builder.create(this, "ViewerHitCount")
+        final TableViewer tv = TableViewer.Builder.create(this, "ViewerHitCount")
                 .title("Hello Hits")
                 .table(hitCounter.getTable())
                 .sortBy("-hits")
+                .build();
+
+        outputViewerUrl = CfnOutput.Builder.create(this, "TableViewerUrl")
+                .value(tv.getEndpoint())
+                .build();
+
+        outputEndpoint = CfnOutput.Builder.create(this, "GatewayUrl")
+                .value(gateway.getUrl())
                 .build();
     }
 }
